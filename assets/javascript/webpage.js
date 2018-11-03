@@ -11,6 +11,7 @@ var button_types = ["btn btn-primary",
 
 
 const API_KEY = "yNTDajMxofLDpXDTp4DQTAABU6oxM4fQ";
+const IMAGE_COUNT = 10;
 
 function add_topic_button() {
     $("input").val($("input").val().trim()); //Error handling. Remove excess whitespaces to prevent errors.
@@ -24,7 +25,7 @@ function add_topic_button() {
             new_button.attr("id", $("input").val());
             new_button.attr("offset", 0);
             new_button.text(new_button.attr("id"));
-            new_button.click(generate_images);
+            var empty_image_set = new_button.click(generate_images);
             $("#topics").append(new_button);
             $("input").val("");
         }
@@ -35,31 +36,53 @@ function add_topic_button() {
 
 function generate_images() {
     var offset = parseInt($(this).attr("offset"));
-    var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + this.id + "&api_key=" + API_KEY + "&limit=10" + "&offset=" + offset;
+    console.log("Offset beginning: " + offset);
+    var search_term=this.id;
+    var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + search_term + "&api_key=" + API_KEY + "&limit=" + IMAGE_COUNT + "&offset=" + offset;
+    
     $.ajax({
         url: queryURL,
         method: "GET"
     }).then(function (response) {
-        for (var i = 0; i < 10; i++) {
-            var image_object = $('<div class="m-2">');
-            image_object.append('<p class = "my-0 mx-2">Rating: ' + response.data[i].rating + '</p>');
-            image_object.append('<image src="' + response.data[i].images.fixed_height_still.url + '">');
-            $("#images").append(image_object);
+        if (response.data.length === 0) {
+            alert("No images with that tag.");
+            return true; 
+            
+        }
+        else {
+            console.log("else testing?");
+            var iter; 
+            if (response.data.length === IMAGE_COUNT)
+                iter = IMAGE_COUNT;
+            else
+                iter = response.data.length;
+
+            console.log("iter value: " + iter); 
+            for (var i = 0; i < iter; i++) {
+                console.log("forloop testing");
+                var image_object = $('<div class="m-2">');
+
+                image_object.append('<p class = "my-0 mx-2">Rating: ' + response.data[i].rating + '</p>');
+                image_object.append('<image src="' + response.data[i].images.fixed_height_still.url + '">');
+                $("#images").append(image_object);
+            }
         }
     });
 
-    $(this).attr("offset", offset + 10);
-    console.log($(this).attr("offset"));
+    $(this).attr("offset", offset + IMAGE_COUNT);
+
+    console.log("Offset end: " + $(this).attr("offset"));
+
 }
 
 function play_pause() {
 
-    if (this.src == this.src.replace("_s", "")){
+    if (this.src == this.src.replace("_s", "")) {
         console.log(this.src);
         this.src = this.src.replace(".gif", "_s.gif");
         console.log(this.src);
     }
-    else{
+    else {
         console.log(this.src);
         this.src = this.src.replace("_s.gif", ".gif");
         console.log(this.src);
@@ -67,7 +90,7 @@ function play_pause() {
 }
 
 $("document").ready(function () {
-    $("button").click(function () {
+    $("button").click(function (event) {
         event.preventDefault();
         add_topic_button();
     });
