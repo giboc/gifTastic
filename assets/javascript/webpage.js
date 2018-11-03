@@ -16,12 +16,16 @@ const IMAGE_COUNT = 10;
 
 //This function is called whenever the "add search button" is clicked.
 //This will then create a clickable button that generates the pictures of that topic.
+//Instead of using a static array, and appending to the end, I chose to dynamically generate the buttons.
+//Slightly different, but I thought this was cooler.
 function add_topic_button() {
     $("input").val($("input").val().trim()); //Error handling. Remove excess whitespaces to prevent errors.
     if ($("input").val() == "")
         alert("We can't add a blank topic!"); //More error handling, since blank topics break everything.
     else {
         var random_button = Math.floor(Math.random() * 8);
+        //If the length of the id is 0, we can assume the id doesn't exist.
+        //Thus, create the button. If the length is not 0, the id already exists so we prevent the creation of a duplicate button.
         if (!$("#" + $("input").val()).length) {
             var new_button = $('<button type="button" class="m-1">');
             new_button.addClass(button_types[random_button]);
