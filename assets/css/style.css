@@ -1,0 +1,13 @@
+img{
+    padding: 10px;
+}
+
+.clearfix{
+    
+        content: "";
+        clear: both;
+        display: table;
+    
+}
+
+

@@ -2,16 +2,39 @@
 
 <head>
     <title>GIF, not JIF</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
 
 </head>
 
 <body>
-    <div id="topic"> </div>
-    <div id="images"></div>
+    <div class="jumbotron text-center">
+        <h1>Bootcamp Image Generator!</h1>
+        <p>Add some topics then click the button to generate the image</p>
+    </div>
+    <div class="container-fullwidth">
+        <nav class="navbar navbar-expand-auto navbar-light bg-light">
 
-    <div id="testing"></div>
+            <form class="form-inline my-2 my-lg-0  ml-auto">
+                <input class="form-control mr-sm-2" type="search" placeholder="search topic" aria-label="Search">
+                <button class="btn btn-outline-primary mx-auto my-auto" type="submit">Add Search Button</button>
+            </form>
+        </nav>
+    </div>
+
+    <div class="container">
+        <div class = "row" id="topics"></div>
+        <div class = "row" id="images" class="d-inline"></div>
+    </div>
+
+
+    
+
+    
     <script src="assets/javascript/webpage.js"></script>
 </body>
 
